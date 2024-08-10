@@ -1,0 +1,39 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main  # Deploy only when changes are pushed to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: actions/setup-docker@v1
+
+    - name: Build Docker image
+      run: docker-compose build
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Tag Docker image
+      run: docker tag sol-wallet-tracker:latest ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
+
+    - name: Push Docker image to Docker Hub
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
+
+    - name: Deploy to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: "solana-tracker"
+        environment_name: "solana-tracker-env"
+        version_label: "v1-${{ github.sha }}"
+        region: ${{ secrets.AWS_REGION }}
