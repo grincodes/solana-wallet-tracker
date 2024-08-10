@@ -13,9 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker
-      uses: actions/setup-docker@v1
-
     - name: Build Docker image
       run: docker-compose build
 
@@ -33,7 +30,7 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: "solana-tracker"
-        environment_name: "solana-tracker-env"
+        application_name: "Your-EBS-Application-Name"
+        environment_name: "Your-EBS-Environment-Name"
         version_label: "v1-${{ github.sha }}"
         region: ${{ secrets.AWS_REGION }}
