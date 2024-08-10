@@ -30,7 +30,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
     - name: Tag Docker image
-      run: docker tag sol-wallet-tracker:latest ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
+      run: docker tag sol-wallet-tracker ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
 
     - name: Push Docker image to Docker Hub
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
