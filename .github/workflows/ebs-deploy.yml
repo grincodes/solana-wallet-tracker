@@ -30,7 +30,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
     - name: Pull Docker image from Docker Hub
-    run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
+      run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/sol-wallet-tracker:latest
 
     - name: Deploy to Elastic Beanstalk
       uses: einaregilsson/beanstalk-deploy@v20
