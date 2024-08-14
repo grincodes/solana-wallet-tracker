@@ -37,10 +37,6 @@ export class WalletActivityService {
       };
       await axios.post(url, payload);
     } catch (error) {
-      console.log("====================================");
-      console.log(error);
-      console.log("====================================");
-
       throw error;
     }
   }
@@ -69,6 +65,9 @@ export class WalletActivityService {
 
       return success("true");
     } catch (error) {
+      console.log("====================================");
+      console.log(error);
+      console.log("====================================");
       handleErrorCatch(error);
     }
   }
